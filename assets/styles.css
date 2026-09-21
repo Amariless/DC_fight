@@ -62,21 +62,36 @@ html, body { margin: 0; height: 100%; overflow: hidden; color: #fff; }
 .btn:active { transform: scale(0.97); }
 .btn.secondary { background: #333; color: #fff; border: 1px solid #666; }
 
-/* ---------- Placement / scanning ---------- */
-#board-status { margin-top: 10px; font-size: 0.85rem; padding: 6px 10px; border-radius: 20px; background: rgba(255,255,255,0.08); }
-#board-status.ok { background: rgba(60, 180, 90, 0.35); }
+/* ---------- Placement / scanning: barra delgada arriba, NO tapa la
+   cámara — el resto de la pantalla queda libre para apuntar. ---------- */
+#hud-scan {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 8;
+  padding: 8px 10px 10px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+  text-align: center;
+}
 
-.scan-chips { display: flex; gap: 10px; justify-content: center; margin: 14px 0; }
+.scan-round-label {
+  font-size: 0.75rem;
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+
+.scan-row { display: flex; gap: 6px; }
 .scan-chip {
   flex: 1;
-  padding: 10px;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.08);
-  font-size: 0.85rem;
+  padding: 6px 4px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  font-size: 0.7rem;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.scan-chip.ok { background: rgba(60, 180, 90, 0.35); }
-
-#screen-placement.screen { background: rgba(5,6,10,0.15); } /* deja ver más la cámara mientras detecta */
+.scan-chip.ok { background: rgba(60, 180, 90, 0.4); }
 
 .stat-cards-row { display: flex; gap: 12px; }
 .stat-card {
