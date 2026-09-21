@@ -1,0 +1,23 @@
+{
+  "type": "PLANAR",
+  "properties": {
+    "top": 68,
+    "left": 0,
+    "width": 858,
+    "height": 1144,
+    "isRotated": false,
+    "originalWidth": 858,
+    "originalHeight": 1280
+  },
+  "imagePath": "image-targets/mujerMaravilla_card_luminance.jpg",
+  "metadata": null,
+  "name": "mujerMaravilla_card",
+  "resources": {
+    "originalImage": "mujerMaravilla_card_original.jpg",
+    "croppedImage": "mujerMaravilla_card_cropped.jpg",
+    "thumbnailImage": "mujerMaravilla_card_thumbnail.jpg",
+    "luminanceImage": "mujerMaravilla_card_luminance.jpg"
+  },
+  "created": 1789943680064,
+  "updated": 1789943680064
+}

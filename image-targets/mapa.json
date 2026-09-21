@@ -1,0 +1,23 @@
+{
+  "type": "PLANAR",
+  "properties": {
+    "top": 125,
+    "left": 0,
+    "width": 600,
+    "height": 800,
+    "isRotated": true,
+    "originalWidth": 600,
+    "originalHeight": 1050
+  },
+  "imagePath": "image-targets/mapa_luminance.png",
+  "metadata": null,
+  "name": "mapa",
+  "resources": {
+    "originalImage": "mapa_original.png",
+    "croppedImage": "mapa_cropped.png",
+    "thumbnailImage": "mapa_thumbnail.png",
+    "luminanceImage": "mapa_luminance.png"
+  },
+  "created": 1789944708918,
+  "updated": 1789944708918
+}

@@ -1,0 +1,23 @@
+{
+  "type": "PLANAR",
+  "properties": {
+    "top": 68,
+    "left": 0,
+    "width": 858,
+    "height": 1144,
+    "isRotated": false,
+    "originalWidth": 858,
+    "originalHeight": 1280
+  },
+  "imagePath": "image-targets/flash_card_luminance.jpg",
+  "metadata": null,
+  "name": "flash_card",
+  "resources": {
+    "originalImage": "flash_card_original.jpg",
+    "croppedImage": "flash_card_cropped.jpg",
+    "thumbnailImage": "flash_card_thumbnail.jpg",
+    "luminanceImage": "flash_card_luminance.jpg"
+  },
+  "created": 1789943692439,
+  "updated": 1789943692439
+}

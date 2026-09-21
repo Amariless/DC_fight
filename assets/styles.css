@@ -1,0 +1,207 @@
+/* -------------------------------------------------------------------
+   styles.css — HUD y pantallas. El runtime de 8th Wall dibuja la cámara
+   y la escena 3D detrás (canvas a pantalla completa, z-index bajo);
+   todo esto flota encima.
+   ------------------------------------------------------------------- */
+
+:root {
+  --p1-color: #2b6fb3;
+  --p2-color: #c0392b;
+  --panel-bg: rgba(10, 12, 20, 0.88);
+  --accent: #f0b90b;
+  font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; height: 100%; overflow: hidden; color: #fff; }
+
+.hidden { display: none !important; }
+
+/* ---------- Pantallas centradas tipo modal ---------- */
+.screen {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(5, 6, 10, 0.55);
+}
+
+.panel {
+  background: var(--panel-bg);
+  border: 2px solid var(--accent);
+  border-radius: 14px;
+  padding: 24px;
+  max-width: 460px;
+  width: 100%;
+  max-height: 88vh;
+  overflow-y: auto;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+
+.panel h1 { font-size: 1.6rem; margin: 0 0 6px; color: var(--accent); }
+.panel h2 { font-size: 1.2rem; margin: 0 0 14px; }
+.panel p { opacity: 0.85; line-height: 1.4; }
+
+.btn {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 12px 26px;
+  border: none;
+  border-radius: 30px;
+  background: var(--accent);
+  color: #1a1a1a;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.btn:active { transform: scale(0.97); }
+.btn.secondary { background: #333; color: #fff; border: 1px solid #666; }
+
+/* ---------- Placement / scanning ---------- */
+#board-status { margin-top: 10px; font-size: 0.85rem; padding: 6px 10px; border-radius: 20px; background: rgba(255,255,255,0.08); }
+#board-status.ok { background: rgba(60, 180, 90, 0.35); }
+
+.scan-chips { display: flex; gap: 10px; justify-content: center; margin: 14px 0; }
+.scan-chip {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  font-size: 0.85rem;
+}
+.scan-chip.ok { background: rgba(60, 180, 90, 0.35); }
+
+#screen-placement.screen { background: rgba(5,6,10,0.15); } /* deja ver más la cámara mientras detecta */
+
+.stat-cards-row { display: flex; gap: 12px; }
+.stat-card {
+  flex: 1;
+  border: 2px solid #555;
+  border-radius: 10px;
+  padding: 10px;
+  background: rgba(0,0,0,0.55);
+  text-align: left;
+}
+.stat-card h3 { margin: 0 0 4px; }
+.stat-card .tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.15);
+  margin-bottom: 6px;
+}
+.stat-row { display: flex; justify-content: space-between; font-size: 0.9rem; padding: 2px 0; }
+.stat-card .ability { font-size: 0.78rem; opacity: 0.85; margin-top: 6px; }
+
+/* ---------- HUD de combate (permanente) ---------- */
+#hud-combat {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 8;
+  padding: 10px 12px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.75), transparent 90%);
+}
+
+.hp-bars { display: flex; gap: 10px; }
+.hp-bar { flex: 1; position: relative; }
+.hp-bar .name { font-size: 0.8rem; font-weight: 700; }
+.hp-bar .track { height: 12px; border-radius: 6px; background: rgba(255,255,255,0.15); overflow: hidden; margin-top: 2px; }
+.hp-bar .fill { height: 100%; transition: width 0.35s ease; }
+#hp-bar-P1 .fill { background: var(--p1-color); }
+#hp-bar-P2 .fill { background: var(--p2-color); }
+.hp-bar .value { font-size: 0.7rem; opacity: 0.8; }
+
+.pips { display: flex; gap: 4px; margin-top: 3px; }
+.pip { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.25); }
+.pip.filled { background: var(--accent); }
+
+.floating-damage {
+  position: absolute;
+  top: -6px; right: 0;
+  color: #ff5252;
+  font-weight: 800;
+  font-size: 1.1rem;
+  animation: floatUp 0.9s ease-out forwards;
+  pointer-events: none;
+  white-space: nowrap;
+}
+.floating-damage.blocked {
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+@keyframes floatUp {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-30px); }
+}
+
+#turn-banner {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 0.85rem;
+  background: rgba(0,0,0,0.5);
+  border-radius: 20px;
+  padding: 6px 10px;
+}
+
+#btn-attack {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9;
+  width: 74vw;
+  max-width: 320px;
+  padding: 18px;
+  font-size: 1.2rem;
+  border-radius: 40px;
+  border: none;
+  background: linear-gradient(180deg, #ff4d4d, #b71c1c);
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 1px;
+  box-shadow: 0 6px 20px rgba(183,28,28,0.6);
+}
+#btn-attack:active { transform: translateX(-50%) scale(0.96); }
+
+/* ---------- Toast ---------- */
+#toast {
+  position: fixed;
+  bottom: 110px;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  background: rgba(20,20,20,0.95);
+  border: 1px solid var(--accent);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  z-index: 20;
+  opacity: 0;
+  transition: all 0.25s ease;
+  pointer-events: none;
+  max-width: 80vw;
+  text-align: center;
+}
+#toast.visible { opacity: 1; transform: translate(-50%, 0); }
+
+/* ---------- Overlay de estadísticas (tap sobre el modelo 3D) ---------- */
+#stat-overlay-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 15;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.stat-overlay-content { width: 100%; max-width: 340px; }
+
+/* ---------- Resultados ---------- */
+#game-result-stats { text-align: left; font-size: 0.85rem; }
+#game-result-stats ul { padding-left: 18px; margin: 4px 0; }
